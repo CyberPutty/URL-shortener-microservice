@@ -29,13 +29,41 @@ app.get("/", function (request, response) {
   
 
 });
-app.get("/:test", function(req,resp){
- Url.findOne({url: req.params.test},function(err,data){
+app.get("/:url", function(req,resp){
+  
+  // https
+ if(req.params.url.match(/www/)){
+ Url.findOne({url: req.params.url},function(err,data){
     if (err) console.log(err);
     console.log(data);
-    resp.end(JSON.stringify(data));
+   if (data){
+     resp.end(JSON.stringify(data));
+   }
   });
   console.log(req.params);
+ }
+else if(req.params.url.match(/d+/)){
+Url.findOne({shortened: req.params.url},function(err,data){
+if (err) console.log(err);
+  if(data){
+  resp.end(JSON.stringify(data));
+  }
+});
+} 
+else {
+  Url.count(function(err,data){
+  if (err) console.log(err);
+    if(data)
+  
+  });
+Url.save({url: req.params.url.toString(), shortened})
+
+}
+ 
+  
+  
+  
+  
   
 });
 // listen for requests :)
