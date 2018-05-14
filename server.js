@@ -31,17 +31,21 @@ app.get("/", function (request, response) {
 });
 app.get("/:url", function(req,resp){
   
-  // https
- if(req.params.url.match(/www/)){
+  // match urlToShorten;
+ if(req.params.url.match(/https:/)){
  Url.findOne({url: req.params.url},function(err,data){
     if (err) console.log(err);
     console.log(data);
    if (data){
      resp.end(JSON.stringify(data));
    }
+   else{
+     
+   }
   });
   console.log(req.params);
  }
+  // match shortened;
 else if(req.params.url.match(/d+/)){
 Url.findOne({shortened: req.params.url},function(err,data){
 if (err) console.log(err);
@@ -50,18 +54,25 @@ if (err) console.log(err);
   }
 });
 } 
-else {
-  Url.count(function(err,data){
-  if (err) console.log(err);
-    if(data)
+  // create new entry if entry doesn't exist
+
+
   
   });
-Url.save({url: req.params.url.toString(), shortened})
-
-}
  
+ }
   
-  
+ function countAndUpdate(data){
+  Url.count(function(err,data){
+  if (err) console.log(err);
+    if(data){
+    let entry= new Url({
+    url: req.params.url,
+    shortened: data+1
+    });
+      Url.save(entry);
+    resp.end(JSON.stringify(entry));
+    }  
   
   
   
