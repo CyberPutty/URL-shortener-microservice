@@ -29,8 +29,8 @@ app.get("/", function (request, response) {
   
 
 });
-app.get("/:url", function(req,resp){
-  let regex= new RegExp("https");
+app.get("/new/:url", function(req,resp){
+  let regex= new RegExp("www");
   // match urlToShorten;
  if(req.params.url.toString().match(regex)){
  Url.findOne({url: req.params.url},function(err,data){
@@ -48,7 +48,7 @@ app.get("/:url", function(req,resp){
     url: req.params.url,
     shortened: data+1
     });
-      Url.save(entry);
+      entry.save();
     resp.end(JSON.stringify(entry));
     }
   });
