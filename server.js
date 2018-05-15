@@ -39,7 +39,7 @@ app.get("/https\://:url", function(req,resp){
     if (err) console.log(err);
    if (data){
      console.log(data);
-     resp.end(JSON.stringify(data));
+     resp.json(data);
    }
    // update record if data is null;
    else{
@@ -51,7 +51,7 @@ app.get("/https\://:url", function(req,resp){
     shortened: data+1
     });
       entry.save();
-    resp.end(JSON.stringify(entry));
+    resp.json(entry);
     }
   });
    }
@@ -59,21 +59,20 @@ app.get("/https\://:url", function(req,resp){
   console.log(req.params);
  }
   // match shortened;
-else if(req.params.url.match(/d+/)){
-Url.findOne({shortened: req.params.url},function(err,data){
-if (err) console.log(err);
-  if(data){
-  resp.end(JSON.stringify(data));
-  }
-});
-} 
+// else if(req.params.url.match(/d+/)){
+
+// } 
   
 });
-app.get("/(/d+/)",function(req,resp){
-
-
+app.get('/:shortened(\d+)',function(req,resp){
+Url.findOne({shortened: req.params.shortened},function(err,data){
+if (err) console.log(err);
+  if(data){
+    console.log(data);
+  resp.json(data);
+  }
 });
-
+});
 
 
 
