@@ -50,7 +50,7 @@ app.get("/https\://:url", function(req,resp){
       console.log("there is data"+data);
     }
      else{
-       count=1;
+       count=0;
      } 
       
     let entry= new Url({
@@ -65,6 +65,9 @@ app.get("/https\://:url", function(req,resp){
   });
   console.log(req.params);
  }
+  else{
+  resp.sendStatus(400);
+  }
   // match shortened;
 // else if(req.params.url.match(/d+/)){
 
@@ -72,11 +75,14 @@ app.get("/https\://:url", function(req,resp){
   
 });
 app.get('/:shortened(\\d+)',function(req,resp){
-Url.findOne({shortened: req.params.shortened},function(err,data){
+Url.findOne({shortened: "https://chocolate-wizard.glitch.me/"+ req.params.shortened},function(err,data){
 if (err) console.log(err);
   if(data){
     console.log(data.url);
   resp.redirect("https://"+data.url);
+  }
+  else{
+  resp.sendStatus(400);
   }
 });
 });
