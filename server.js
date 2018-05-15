@@ -29,10 +29,12 @@ app.get("/", function (request, response) {
   
 
 });
-app.get("/new/:url", function(req,resp){
-  let regex= new RegExp("www");
+app.get("/new/:url(https:\/\//)", function(req,resp){
+  let regex= new RegExp("https://");
   // match urlToShorten;
+  console.log(req.params.url.toString());
  if(req.params.url.toString().match(regex)){
+   console.log("passed regex");
  Url.findOne({url: req.params.url},function(err,data){
     if (err) console.log(err);
     console.log(data);
