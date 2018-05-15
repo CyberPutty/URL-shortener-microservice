@@ -29,7 +29,7 @@ app.get("/", function (request, response) {
   
 
 });
-app.get("/https\://:url", function(req,resp){
+app.get("/https\?\://:url", function(req,resp){
   let regex= new RegExp("www");
   // match urlToShorten;
   //console.log(req.params.url.toString().match(/regex/));
