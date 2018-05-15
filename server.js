@@ -11,7 +11,7 @@ var db = mongoose.connection;
 
 const urls= mongoose.Schema({
   url: String,
-  shortened: Number
+  shortened: String
 });
 
 const Url= mongoose.model("Url", urls);
@@ -45,14 +45,21 @@ app.get("/https\://:url", function(req,resp){
    else{
   Url.count(function(err,data){
   if (err) console.log(err);
+    let count= data;
     if(data){
+      console.log("there is data"+data);
+    }
+     else{
+       count=1;
+     } 
+      
     let entry= new Url({
     url: req.params.url,
-    shortened: "https://chocolate-wizard.glitch.me/"+data+1
+    shortened: "https://chocolate-wizard.glitch.me/"+((count+1).toString())
     });
       entry.save();
     resp.json(entry);
-    }
+    
   });
    }
   });
