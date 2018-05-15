@@ -48,7 +48,7 @@ app.get("/https\://:url", function(req,resp){
     if(data){
     let entry= new Url({
     url: req.params.url,
-    shortened: data+1
+    shortened: "https://chocolate-wizard.glitch.me/"+data+1
     });
       entry.save();
     resp.json(entry);
@@ -64,12 +64,12 @@ app.get("/https\://:url", function(req,resp){
 // } 
   
 });
-app.get('/:shortened(\d+)',function(req,resp){
+app.get('/:shortened(\\d+)',function(req,resp){
 Url.findOne({shortened: req.params.shortened},function(err,data){
 if (err) console.log(err);
   if(data){
-    console.log(data);
-  resp.json(data);
+    console.log(data.url);
+  resp.redirect("https://"+data.url);
   }
 });
 });
